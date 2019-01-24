@@ -1,0 +1,57 @@
+
+<html>
+<input type="file" onchange="previewFile()"><br>
+<input type='text'>
+<img src="" height="200" alt="Image preview...">
+<input type="submit" onclick="test()">
+
+
+</html>
+
+<script>
+    function previewFile(){
+       var preview = document.querySelector('img'); //selects the query named img
+       var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+       var reader  = new FileReader();
+
+       reader.onloadend = function () {
+           preview.src = reader.result;
+       }
+
+       if (file) {
+           reader.readAsDataURL(file); //reads the data as a URL
+       } else {
+           preview.src = "";
+       }
+    }
+
+    function upload(){
+        var file    = document.querySelector('input[type=file]').files[0]; 
+
+        var http = new XMLHttpRequest();
+        var url='http://localhost:5000/';
+
+        let formdata=new FormData();
+        formdata.append("file",file);
+        http.open("POST",url);
+        http.send(formdata);
+        alert('sent');
+    }
+
+    function test(){
+        var file    = document.querySelector('input[type=text]'); 
+
+        var http = new XMLHttpRequest();
+        
+
+        var url='http://localhost:5000/test';
+
+        let formdata=new FormData();
+        formdata.append("file",file);
+        http.open("POST",url);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.send(formdata);
+        alert(formdata);
+    }
+
+</script>
