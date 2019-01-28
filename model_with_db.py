@@ -4,7 +4,25 @@ from keras.models import Model
 from keras_vggface.vggface import VGGFace
 from keras_preprocessing.image import load_img,img_to_array
 from keras.applications.vgg16 import preprocess_input
+
+#db connection
+#import mysql.connector
+import MySQLdb
+connection = MySQLdb.connect(db="test")
+mycursor = connection.cursor( )
+'''
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="",
+    database="test"
+)
+
+print (mydb)
+mycursor = mydb.cursor()
+'''
 vggface = VGGFace(model='vgg16')
+
 
 vgg_face_descriptor = Model (inputs = vggface.layers[0].input , outputs = vggface.layers[-2].output)
 
@@ -40,6 +58,26 @@ def verifyFace(img1,img2):
     img1_rep = vgg_face_descriptor.predict(preprocess_image(img1))[0,:]
     img2_rep = vgg_face_descriptor.predict(preprocess_image(img2))[0,:]
 
+    print (img1_rep)
+    print (type(img1_rep))
+
+    #numpy array to BLOB
+    byte_array = img1_rep.tostring()
+
+    #inserting into database
+    query = f"INSERT INTO user_info (uid,features) VALUES (%s,%s)"
+    uid=4
+    args = (uid,byte_array)
+    print("args",args)
+    print (query,args)
+    mycursor.execute(query,args)
+
+    
+    #BLOB to numpy array
+    numpy_arr = np.fromstring(byte_array)
+    #print (numpy_arr)
+
+    
     cos_similarity = findCosDistance(img1_rep,img2_rep)
     if(cos_similarity < epsilon):
         print("verified... they are same person")

@@ -46,17 +46,18 @@ def verifyFace(img1,img2):
     else:
         print("unverified! they are not same person!")
 
+verifyFace('F:/sem5-mine/SE_project/project/helloflask/1.jpg','F:/sem5-mine/SE_project/project/helloflask/2.jpg')
 
 
 def verifyUploadedFace(imgName):
     print('trying to verify uploaded face')
     img1_rep = vgg_face_descriptor.predict(preprocess_image(imgName))[0,:]
-    img2_rep = vgg_face_descriptor.predict(preprocess_image('2.jpg'))[0,:]
+    img2_rep = vgg_face_descriptor.predict(preprocess_image('F:/sem5-mine/SE_project/Project/helloflask/2.jpg'))[0,:]
 
     cos_similarity = findCosDistance(img1_rep,img2_rep)
     if(cos_similarity < epsilon):
-        return True
+        return cos_similarity
     else:
-        return False
+        return cos_similarity
 
 

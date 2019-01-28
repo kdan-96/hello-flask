@@ -13,10 +13,8 @@ def upload_file():
       print ("post req")
       f = request.files['file']
       f.save(secure_filename(f.filename))
-      if (verifyUploadedFace(secure_filename(f.filename))):
-         return jsonify(valid=True)
-      else:
-         return jsonify(valid=False)
+      val=verifyUploadedFace(secure_filename(f.filename))
+      return jsonify(val)
    else:
       print ("no request")
       return jsonify(valid=False)
