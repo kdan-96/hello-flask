@@ -10,19 +10,8 @@ from keras.applications.vgg16 import preprocess_input
 import MySQLdb
 connection = MySQLdb.connect(db="test")
 mycursor = connection.cursor( )
-'''
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd="",
-    database="test"
-)
 
-print (mydb)
-mycursor = mydb.cursor()
-'''
 vggface = VGGFace(model='vgg16')
-
 
 vgg_face_descriptor = Model (inputs = vggface.layers[0].input , outputs = vggface.layers[-2].output)
 
@@ -58,19 +47,28 @@ def verifyFace(img1,img2):
     img1_rep = vgg_face_descriptor.predict(preprocess_image(img1))[0,:]
     img2_rep = vgg_face_descriptor.predict(preprocess_image(img2))[0,:]
 
-    print (img1_rep)
-    print (type(img1_rep))
+    #print (img1_rep)
+    #print (type(img1_rep))
 
     #numpy array to BLOB
     byte_array = img1_rep.tostring()
 
     #inserting into database
     query = f"INSERT INTO user_info (uid,features) VALUES (%s,%s)"
-    uid=4
+    uid=6
     args = (uid,byte_array)
-    print("args",args)
-    print (query,args)
+    #print("args",args)
+    #print (query,args)
     mycursor.execute(query,args)
+    connection.commit()
+    #read data from database
+
+    readData = "SELECT uid FROM user_info"
+    mycursor.execute(readData)
+    myresult = mycursor.fetchall()
+
+    for row in myresult:
+        print (row)
 
     
     #BLOB to numpy array
