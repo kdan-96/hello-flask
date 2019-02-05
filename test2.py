@@ -6,7 +6,7 @@ from model_copy2 import verifyUploadedFace,preprocess_image,findCosDistance,veri
 import pprint
 from PIL import Image
 import os,os.path
-from json_tricks import dump, dumps, load, loads, strip_comments
+from json_tricks import  dumps,  loads
 
 app = Flask(__name__)
 path=r"F:\sem5-mine\SE_project\Project\node_server\nodeServer\src\uploads"
@@ -58,6 +58,7 @@ def verify():
             print ('file found')
             
       val=verifyFaceComparedToRegisteredFace(registeredImg,os.path.join(path,python_filename))
+      print (os.path.join(path,python_filename))
       os.remove(os.path.join(path,python_filename))
       return jsonify(val)
       

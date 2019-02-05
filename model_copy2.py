@@ -46,7 +46,7 @@ def verifyFace(img1,img2):
     else:
         print("unverified! they are not same person!")
 
-verifyFace('F:/sem5-mine/SE_project/project/helloflask/6.jpg','F:/sem5-mine/SE_project/project/helloflask/2.jpg')
+#verifyFace('F:/sem5-mine/SE_project/project/helloflask/6.jpg','F:/sem5-mine/SE_project/project/helloflask/2.jpg')
 
 
 def verifyUploadedFace(imgName):
