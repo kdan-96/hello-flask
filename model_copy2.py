@@ -61,4 +61,14 @@ def verifyUploadedFace(imgName):
     else:
         return cos_similarity
 
+def verifyFaceComparedToRegisteredFace(registeredImg,imgName):
+    print ('trying to verify uploaded face compared to database face')
+    
+    img1_rep = vgg_face_descriptor.predict(registeredImg)[0,:]
+    img2_rep = vgg_face_descriptor.predict(preprocess_image(imgName))[0,:]
 
+    cos_similarity = findCosDistance(img1_rep,img2_rep)
+    if(cos_similarity < epsilon):
+        return cos_similarity
+    else:
+        return cos_similarity
