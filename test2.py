@@ -9,8 +9,8 @@ import os,os.path
 from json_tricks import  dumps,  loads
 
 app = Flask(__name__)
-path=r"F:\sem5-mine\SE_project\Project\node_server\nodeServer\src\uploads"
-registerPath=r"F:\sem5-mine\SE_project\Project\node_server\nodeServer\src\register"
+path=r"F:\sem5-mine\SE_project\Project\facepass_server\nodeServer\src\uploads"
+registerPath=r"F:\sem5-mine\SE_project\Project\facepass_server\nodeServer\src\register"
 
 
 
@@ -31,7 +31,10 @@ def preprocess():
             print (filename)
             for python_filename in os.listdir(registerPath):
                   if python_filename==filename:
-                        print ('file found under register directory')   
+                     print ('file found under register directory')  
+                  else:
+                     print('file missing under register directory')
+		            
 #File saved to location defined under upload folder
             vector=preprocess_image(os.path.join(registerPath,python_filename))
             print (vector)
@@ -66,11 +69,9 @@ def verify():
       print ("no request")
       return jsonify(valid=False)
 
-      
 
-'''
-@app.route('/', methods = ['GET', 'POST'])
-def test():
+@app.route('/',methods = ['GET','POST']) 
+def root():
    if request.method=='GET':
       print ("root running")
       return jsonify(get=True)
@@ -78,40 +79,30 @@ def test():
       print ('recieved a request')
       print(request.json)
 
-      req = request.get_json()
-      return jsonify(req)
-      #return jsonify(request.values)
 
-'''
+
+
 
 '''
 - File name is sent to endpoint
 - File location is defined in the path variable
 - Read the file using file name from the location and calculate the similarity
 '''
-'''
+
 print ("working")
 @app.route('/test', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':
       f = request.get_json(force=True)
       filename =f['filename']
-      print (f['originalname'])
-      print ("testing")
-      
-      for python_filename in os.listdir(path):
-         if python_filename==filename:
-            print ('file found')
-            
-      val=verifyUploadedFace(os.path.join(path,python_filename))
-      #return jsonify(val)
-      return jsonify(f)
+      print(filename)
+      return jsonify(valid=True)
       
       
    else:
       print ("no request")
       return jsonify(valid=False)
-'''
+
 
 		
 if __name__ == '__main__':
