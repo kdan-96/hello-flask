@@ -9,8 +9,8 @@ import os,os.path
 from json_tricks import  dumps,  loads
 
 app = Flask(__name__)
-path=r"F:\sem5-mine\SE_project\Project\facepass_server\nodeServer\src\uploads"
-registerPath=r"F:\sem5-mine\SE_project\Project\facepass_server\nodeServer\src\register"
+path=r"F:\sem5-mine\SE_project\Project\facepass_server\nodeServer\uploads"
+registerPath=r"F:\sem5-mine\SE_project\Project\facepass_server\nodeServer\register"
 
 
 
