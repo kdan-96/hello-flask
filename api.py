@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request,jsonify,Response
 from werkzeug import secure_filename
-from model_copy2 import verifyUploadedFace,preprocess_image,findCosDistance,verifyFaceComparedToRegisteredFace
+from model import verifyUploadedFace,preprocess_image,findCosDistance,verifyFaceComparedToRegisteredFace
 import pprint
 from PIL import Image
 import os,os.path
@@ -30,6 +30,7 @@ def preprocess():
             filename =f['filename']
             print (filename)
             for python_filename in os.listdir(registerPath):
+                  print (python_filename)
                   if python_filename==filename:
                      print ('file found under register directory')  
                   else:
@@ -53,12 +54,16 @@ def verify():
    if request.method == 'POST':
       f = request.get_json(force=True)
       filename =f['filename']
+      print (filename)
+      print (path)
       registeredImg = f['face_vector']
       
       registeredImg = loads(registeredImg,conv_str_byte=True)
       for python_filename in os.listdir(path):
          if python_filename==filename:
             print ('file found')
+         else:
+            print('file not found')
             
       val=verifyFaceComparedToRegisteredFace(registeredImg,os.path.join(path,python_filename))
       print (os.path.join(path,python_filename))
