@@ -9,8 +9,8 @@ import os,os.path
 from json_tricks import  dumps,  loads
 
 app = Flask(__name__)
-path=r"~/uploads"
-registerPath=r"~/register"
+path=r"/home/kalana_16/uploads"
+registerPath=r"/home/kalana_16/register"
 
 
 
@@ -65,9 +65,9 @@ def verify():
          else:
             print('file not found')
             
-      val=verifyFaceComparedToRegisteredFace(registeredImg,os.path.join(path,python_filename))
-      print (os.path.join(path,python_filename))
-      os.remove(os.path.join(path,python_filename))
+      val=verifyFaceComparedToRegisteredFace(registeredImg,os.path.join(path,filename))
+      print (os.path.join(path,filename))
+      os.remove(os.path.join(path,filename))
       return jsonify(val)
       
    else:
